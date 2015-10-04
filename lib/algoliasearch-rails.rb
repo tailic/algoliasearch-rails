@@ -528,6 +528,12 @@ module AlgoliaSearch
       index.search(q, Hash[params.map { |k,v| [k.to_s, v.to_s] }])
     end
 
+    def algolia_raw_search_disjunctive_faceting(q, disjunctive_facets, params = {}, refinements = {})
+      index_name = params.delete(:index) || params.delete('index') || params.delete(:slave) || params.delete('slave')
+      index = algolia_index(index_name)
+      index.search_disjunctive_faceting(q, disjunctive_facets, Hash[params.map { |k,v| [k.to_s, v.to_s] }], refinements)
+    end
+
     module AdditionalMethods
       def self.extended(base)
         class <<base
